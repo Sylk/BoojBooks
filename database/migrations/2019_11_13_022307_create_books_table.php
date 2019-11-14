@@ -22,7 +22,7 @@ class CreateBookTable extends Migration
             $table->string('score');
             $table->string('cover');
             $table->string('file');
-            $table->dateTime('release_date');
+            $table->dateTime('published_date');
         });
     }
 
