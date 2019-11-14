@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Http\Resources\Books as BookResource;
+use App\Http\Resources\Book as BookResource;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,5 +19,7 @@ use App\Http\Resources\Books as BookResource;
 //});
 
 Route::get('/books', function() {
-    return BookResource::collection(Book::all());
+    $books = App\Book::all();
+
+    return BookResource::collection($books);
 });
