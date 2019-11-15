@@ -8,7 +8,7 @@ class CreateBooksTable extends Migration
 {
     /**
      * Run the migrations.
-     *
+
      * @return void
      */
     public function up()
@@ -17,9 +17,9 @@ class CreateBooksTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('author');
-            $table->string('edition');
+            $table->integer('edition');
             $table->integer('length');
-            $table->string('score');
+            $table->integer('score');
             $table->string('cover');
             $table->string('file');
             $table->dateTime('published_date');
