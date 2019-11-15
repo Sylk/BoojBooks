@@ -23,3 +23,5 @@ Route::get('/books', function() {
 
     return BookResource::collection($books);
 });
+
+Route::delete('/books/{book}', 'BookControl@destroy');

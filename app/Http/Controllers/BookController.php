@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Book;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -79,6 +80,9 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $book = Book::findOrFail($id);
+        $book->delete();
+
+        return response()->json(204);
     }
 }
