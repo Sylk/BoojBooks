@@ -23,7 +23,7 @@ class Book extends JsonResource
             'score' => $this->score ,
             'cover' => $this->cover ,
             'file' => $this->file ,
-            'releaseDate' => $this->releaseDate ,
+            'publishedDate' => $this->published_date ,
         ];
     }
 }
