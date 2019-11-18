@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use App\Http\Resources\Book as BookResource;
+use App\Http\Resources\Tag as TagResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,5 +24,18 @@ Route::get('/books', function() {
 
     return BookResource::collection($books);
 });
+Route::post('/books', 'BookController@store');
 
-Route::delete('/books/{book}', 'BookControl@destroy');
+Route::delete('/books/{book}', 'BookController@destroy');
+Route::patch('/books/{book}', 'BookController@ediit');
+
+Route::post('/collection/books', 'BookController@tagBook');
+
+Route::get('/collections',  function() {
+    $books = \Spatie\Tags\Tag::all();
+    return TagResource::collection($books);
+});
+Route::post('/collections', 'TagController@store');
+Route::delete('/collections/{collection}', 'TagController@destroy');
+
+Route::patch('/collection/{book}', 'TagController@sort');

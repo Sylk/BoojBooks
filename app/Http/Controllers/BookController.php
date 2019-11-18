@@ -2,31 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\Book;
+use App\Book;
+use Faker\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Spatie\Tags\Tag;
 
 class BookController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -35,29 +18,23 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $book = new Book;
+//        NOTE: There is a smoother way to do this, have to look it up though.
+        $book->title = $request->title;
+        $book->author = $request->author;
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $factoryBook = Factory(Book::class)->make();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $book->edition = $factoryBook->edition;
+        $book->length = $factoryBook->length;
+        $book->score = $factoryBook->score;
+        $book->cover = $factoryBook->cover;
+        $book->file = $factoryBook->file;
+        $book->published_date = $factoryBook->published_date;
+
+        $book->save();
+
+        return response()->json(201);
     }
 
     /**
@@ -72,6 +49,27 @@ class BookController extends Controller
         //
     }
 
+    public function tagBook(Request $request) {
+//        dd($request);
+        $book = Book::find($request->book);
+        $book->attachTag($request->collectionName);
+
+        // Select all of the taggables and then proceed to make sure that the order is correct
+        // so that we can place the (we can skip this if we keep track of this during deletes)
+        // I'm an idiot for trying to commit to this.
+//        $tags = DB::select('select * from taggables where tag_id = :id', ['id' => $request->collectionId]);
+//        $tagsOrder = [];
+//
+//        foreach($tags as $tag) {
+//            array_push($tagsOrder, $tag->order);
+//        }
+
+//            DB::update('UPDATE taggables SET order VALUE :order WHERE tag_id = :id AND taggable_id = :taggable_id',
+//                ['order' => max($tagsOrder)+1, 'id' => $request->collectionId, 'taggable_id' => $book->id]);
+
+        return response()->json(201);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -80,7 +78,7 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        $book = Book::findOrFail($id);
+        $book = Book::find($id);
         $book->delete();
 
         return response()->json(204);
