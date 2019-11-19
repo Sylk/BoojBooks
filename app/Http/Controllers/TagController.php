@@ -17,9 +17,11 @@ class TagController extends Controller
     public function store(Request $request)
     {
         $tag = $request->collection;
-        Tag::create(['name' => $tag]);
+        $tag = Tag::create(['name' => $tag]);
 
-        return response()->json(201);
+        return response()->json(
+            $tag
+        ,201);
     }
 
     /**
