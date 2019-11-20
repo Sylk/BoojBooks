@@ -49,8 +49,7 @@ class BookController extends Controller
         //
     }
 
-    public function tagBook(Request $request) {
-//        dd($request);
+    public function addTag(Request $request) {
         $book = Book::find($request->book);
         $book->attachTag($request->collectionName);
 
@@ -68,6 +67,13 @@ class BookController extends Controller
 //                ['order' => max($tagsOrder)+1, 'id' => $request->collectionId, 'taggable_id' => $book->id]);
 
         return response()->json(201);
+    }
+
+    public function removeTag(Request $request) {
+        $book = Book::find($request->book);
+        $book->detatchTag($request->collectionName);
+
+        return response()->json(204);
     }
 
     /**

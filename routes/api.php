@@ -29,7 +29,8 @@ Route::post('/books', 'BookController@store');
 Route::delete('/books/{book}', 'BookController@destroy');
 Route::patch('/books/{book}', 'BookController@ediit');
 
-Route::post('/collection/books', 'BookController@tagBook');
+Route::post('/collection/books', 'BookController@addTag');
+Route::delete('/collections/books', 'BookController@removeTag');
 
 Route::get('/collections',  function() {
     $books = \Spatie\Tags\Tag::all();
