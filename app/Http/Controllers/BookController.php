@@ -66,7 +66,7 @@ class BookController extends Controller
 //            DB::update('UPDATE taggables SET order VALUE :order WHERE tag_id = :id AND taggable_id = :taggable_id',
 //                ['order' => max($tagsOrder)+1, 'id' => $request->collectionId, 'taggable_id' => $book->id]);
 
-        return response()->json(201);
+        return response()->json($book,201);
     }
 
     public function removeTag(Request $request) {
