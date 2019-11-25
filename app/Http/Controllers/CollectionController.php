@@ -63,20 +63,18 @@ class CollectionController extends Controller
 
         $book = Book::find($request->bookId);
         $collection = Collection::find($request->collectionId);
-dd($collection); // Count the amount of pivots on this...
+
         $book->collections()->attach($request->collectionId);
 
         // save the new order or the collection with the books name
-//        $collection = Collection::find($request->collectionId);
 
-//        $book
 
         return response()->json($book,201);
     }
 
     public function removeBook(Request $request) {
         $book = Book::find($request->book);
-        $book->detatchTag($request->collectionName);
+        $book->collections()->detach($request->collectionId);
 
         return response()->json(204);
     }
