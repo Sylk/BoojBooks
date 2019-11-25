@@ -12,4 +12,9 @@ class Book extends Model
 
     protected $fillable = ['title', 'author', 'edition', 'length', 'score', 'cover', 'file', 'published_date'];
     public $timestamps = false;
+
+    public function collections()
+    {
+        return $this->belongsToMany('App\Collection', 'book_collection');
+    }
 }

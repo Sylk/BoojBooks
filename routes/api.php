@@ -1,8 +1,9 @@
 <?php
 
+use App\Collection;
 use Illuminate\Http\Request;
 use App\Http\Resources\Book as BookResource;
-use App\Http\Resources\Tag as TagResource;
+use App\Http\Resources\Collection as CollectionResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,14 +30,18 @@ Route::post('/books', 'BookController@store');
 Route::delete('/books/{book}', 'BookController@destroy');
 Route::patch('/books/{book}', 'BookController@ediit');
 
-Route::post('/collection/books', 'BookController@addTag');
-Route::delete('/collection/books', 'BookController@removeTag');
+Route::post('/collection/books/tags', 'BookController@addTag');
+Route::delete('/collection/books/tags', 'BookController@removeTag');
+
+Route::post('/collection/books', 'CollectionController@addBook');
+Route::delete('/collection/books', 'CollectionController@removeBook');
 
 Route::get('/collections',  function() {
-    $books = \Spatie\Tags\Tag::all();
-    return TagResource::collection($books);
-});
-Route::post('/collections', 'TagController@store');
-Route::delete('/collections/{collection}', 'TagController@destroy');
+    $collections = Collection::all();
 
-Route::patch('/collection/{book}', 'TagController@sort');
+    return CollectionResource::collection($collections);
+});
+Route::post('/collections', 'CollectionController@store');
+Route::delete('/collections/{collection}', 'CollectionController@destroy');
+
+Route::patch('/collection/{book}', 'CollectionController@sort');

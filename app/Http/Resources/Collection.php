@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Book;
 
-class Tag extends JsonResource
+class Collection extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,12 +15,10 @@ class Tag extends JsonResource
      */
     public function toArray($request)
     {
-        $taggedBooks = Book::withAnyTags([$this->name])->get();
-
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'books' => $taggedBooks
+            'books' => $this->books
         ];
     }
 }
