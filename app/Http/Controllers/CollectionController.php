@@ -62,6 +62,7 @@ class CollectionController extends Controller
     public function addBook(Request $request) {
 
         $collection = Collection::find($request->collectionId);
+//        dd($collection->books());
         $collection->books()->attach($request->bookId);
 
 //        $book = Book::find($request->bookId);

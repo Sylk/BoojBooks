@@ -10,6 +10,12 @@ class Collection extends Model
 {
 //    use BelongsToSortedManyTrait;
 
+    public $incrementing = true;
+    protected $primaryKey = 'id';
+    protected $foreignKey = 'collection_id';
+    protected $fillable = ['name'];
+
+
     public function books()
     {
         return $this->belongsToMany(Book::class, 'book_collection')

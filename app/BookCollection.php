@@ -12,10 +12,10 @@ class BookCollection extends Pivot implements Sortable
 
 //    protected $table = 'book_collection';
 
-//    public $sortable = [
-//        'order_column_name' => 'order',
-//        'sort_when_creating' => true,
-//    ];
+    public $sortable = [
+        'order_column_name' => 'order_column',
+        'sort_when_creating' => true,
+    ];
 
 //    public function buildSortQuery()
 //    {

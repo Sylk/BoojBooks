@@ -11,6 +11,9 @@ class Book extends Model
 {
     use HasTags;
 
+    public $incrementing = true;
+    protected $primaryKey = 'id';
+    protected $foreignKey = 'book_id';
     protected $fillable = ['title', 'author', 'edition', 'length', 'score', 'cover', 'file', 'published_date'];
     public $timestamps = false;
 

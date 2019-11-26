@@ -2,11 +2,16 @@
 
 namespace Tests\Unit;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Book;
+use Faker\Factory;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class BooksTest extends TestCase
 {
+    use WithFaker;
+
 //    NOTE: This test might be redundant but we can fix that in a bit
     public function test_book_comes_back_with_expected_parameters()
     {
@@ -17,35 +22,35 @@ class BooksTest extends TestCase
 
     public function test_book_is_created()
     {
-        // mock a call to the api for a new book with some faker data
 
-        // Check to see that the book was created
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json'])->json('POST', 'api/collection/books', ['title' => 'merlin', 'author' => 'Arthur Pendragon']);
+
+        var_dump($response);
+//        dd('blar');
+
+//        $response = $this->withHeaders([])->json('POST', '/api/collection/books', ['name' => $this->faker->sentence(3, true)]);
+
+        $response
+            ->assertStatus(201)
+            ->assertJson([
+                'created' => true,
+            ]);
+
+//        dd($response);
     }
 
     public function test_books_can_be_removed()
     {
-        // make a call to the api for a new book with some faker data
+        $book = Factory(Book::class)->make();
 
-        // then attempt to SLAUGHTER it by hitting the endpoint to destroy it
-        // NOTE: Perhaps we can chain the created and removed together with some phpunit funkyness
-    }
+        $response = $this->withHeaders([])->json('DELETE', '/api/collection/books', ['id' => $book->id]);
 
-    public function test_books_can_be_reordered()
-    {
-        // create a collection of books
+//        $response
+//            ->assertStatus(204)
 
-        // mock a call to the api to re-order the books
-
-        // Check to see that the new order is enforced
-    }
-
-    public function test_books_can_be_sorted()
-    {
-        // create a collection of books
-
-        // mock a call to the api to sort the differently
-
-        // Check to see that the new order is enforced
+        dd($response);
     }
 
 }
