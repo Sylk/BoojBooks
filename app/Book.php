@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Controllers\BookController;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\Tags\HasTags;
@@ -15,6 +16,9 @@ class Book extends Model
 
     public function collections()
     {
-        return $this->belongsToMany('App\Collection', 'book_collection');
+        return $this->belongsToMany(Collection::class, 'book_collection')
+            ->withPivot('book_collection')
+            ->using(BookController::class);
+//        return $this->belongsToMany('App\Collection', 'book_collection');
     }
 }

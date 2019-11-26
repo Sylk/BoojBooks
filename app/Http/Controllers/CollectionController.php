@@ -61,15 +61,18 @@ class CollectionController extends Controller
 
     public function addBook(Request $request) {
 
-        $book = Book::find($request->bookId);
         $collection = Collection::find($request->collectionId);
+        $collection->books()->attach($request->bookId);
 
-        $book->collections()->attach($request->collectionId);
+//        $book = Book::find($request->bookId);
+//        $collection = Collection::find($request->collectionId);
+//dd('gugu');
+//        $book->collections()->attach($request->collectionId);
 
         // save the new order or the collection with the books name
 
 
-        return response()->json($book,201);
+        return response()->json($collection,201);
     }
 
     public function removeBook(Request $request) {

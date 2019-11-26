@@ -23,8 +23,8 @@ class CreateCollectionTables extends Migration
             $table->primary(['book_id', 'collection_id']);
             $table->unsignedBigInteger('book_id');
             $table->unsignedBigInteger('collection_id');
-//            $table->integer('order')->nullable();
-            $table->integer('position');
+            $table->integer('order_column');
+            $table->integer('position')->nullable();
         });
 
         Schema::table('book_collection', function ($table) {
