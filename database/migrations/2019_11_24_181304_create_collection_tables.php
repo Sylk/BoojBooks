@@ -16,7 +16,7 @@ class CreateCollectionTables extends Migration
         Schema::create('collections', function (Blueprint $table) {
             $table->unsignedBigInteger('book_id')->unique();
             $table->integer('order');
-            $table->foreign('book_id')->references('id')->on('books');
+            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');;
             $table->timestamps();
         });
     }
