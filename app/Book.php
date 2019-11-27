@@ -11,17 +11,14 @@ class Book extends Model
 {
     use HasTags;
 
-    public $incrementing = true;
     protected $primaryKey = 'id';
     protected $foreignKey = 'book_id';
+    public $incrementing = true;
     protected $fillable = ['title', 'author', 'edition', 'length', 'score', 'cover', 'file', 'published_date'];
     public $timestamps = false;
 
-    public function collections()
+    public function collection()
     {
-        return $this->belongsToMany(Collection::class, 'book_collection')
-            ->withPivot('book_collection')
-            ->using(BookController::class);
-//        return $this->belongsToMany('App\Collection', 'book_collection');
+        return $this->belongsTo(Collection::class, 'book_id', 'id');
     }
 }

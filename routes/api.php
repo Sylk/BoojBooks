@@ -34,14 +34,12 @@ Route::post('/collection/books/tags', 'BookController@addTag');
 Route::delete('/collection/books/tags', 'BookController@removeTag');
 
 Route::post('/collection/books', 'CollectionController@addBook');
-Route::delete('/collection/books', 'CollectionController@removeBook');
+Route::delete('/collection/books/{bookId}', 'CollectionController@removeBook');
 
 Route::get('/collections',  function() {
     $collections = Collection::all();
 
     return CollectionResource::collection($collections);
 });
-Route::post('/collections', 'CollectionController@store');
-Route::delete('/collections/{collection}', 'CollectionController@destroy');
 
-Route::patch('/collection/{book}', 'CollectionController@sort');
+Route::post('/collection/{book}', 'CollectionController@processSort');

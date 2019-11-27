@@ -14,22 +14,10 @@ class CreateCollectionTables extends Migration
     public function up()
     {
         Schema::create('collections', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name')->unique();
-            $table->timestamps();
-        });
-
-        Schema::create('book_collection', function (Blueprint $table) {
-            $table->primary(['book_id', 'collection_id']);
-            $table->unsignedBigInteger('book_id');
-            $table->unsignedBigInteger('collection_id');
-            $table->integer('order_column');
-            $table->integer('position')->nullable();
-        });
-
-        Schema::table('book_collection', function ($table) {
+            $table->unsignedBigInteger('book_id')->unique();
+            $table->integer('order');
             $table->foreign('book_id')->references('id')->on('books');
-            $table->foreign('collection_id')->references('id')->on('collections');
+            $table->timestamps();
         });
     }
 
@@ -40,7 +28,6 @@ class CreateCollectionTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('book_collection');
         Schema::dropIfExists('collections');
     }
 }
