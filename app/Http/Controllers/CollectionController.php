@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Book;
+use App\BookCollection;
 use Illuminate\Http\Request;
 use App\Collection;
 
@@ -28,58 +29,33 @@ class CollectionController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function sort(Request $request)
+    public function processSort(Request $request)
     {
-
-        $book = Book::find(2);
-
-        if ($request->sort == 'up') {
-            $book->moveOrderUp();
-        } elseif ($request->sort == 'down') {
-            $book->moveOrderDown();
-        } elseif ($request->sort == 'default') {
-            Tags::setNewOrder($request->collection);
+        if($collection = Collection::find($request->originId)) {
+            $collection->sort($request->type, $collection->id, $request->destinationId);
+        } else {
+            return response()->json(403);
         }
-
         return response()->json(200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function addBook(Request $request)
     {
+        $collection =  new Collection;
+        if($collection = $collection->addBook($request->bookId)) {
+            return response()->json($collection,201);
+        }
 
-        $collection = Collection::find($id);
-        $collection->delete();
-
-        return response()->json(204);
+        return response()->json(['message' => 'This book has already been added.'],403);
     }
 
-    public function addBook(Request $request) {
+    public function removeBook($bookId) {
+        $collection =  new Collection;
+//        dd($request->attributes);
+        if($collection->removeBook($bookId)) {
+            return response()->json(['message' => 'Book deleted from collection.'],204);
+        }
 
-        $collection = Collection::find($request->collectionId);
-//        dd($collection->books());
-        $collection->books()->attach($request->bookId);
-
-//        $book = Book::find($request->bookId);
-//        $collection = Collection::find($request->collectionId);
-//dd('gugu');
-//        $book->collections()->attach($request->collectionId);
-
-        // save the new order or the collection with the books name
-
-
-        return response()->json($collection,201);
-    }
-
-    public function removeBook(Request $request) {
-        $book = Book::find($request->book);
-        $book->collections()->detach($request->collectionId);
-
-        return response()->json(204);
+        return response()->json(['message' => 'Book not deleted.'], 403);
     }
 }
