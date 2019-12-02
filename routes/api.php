@@ -42,4 +42,4 @@ Route::get('/collections',  function() {
     return CollectionResource::collection($collections);
 });
 
-Route::post('/collection/{book}', 'CollectionController@processSort');
+Route::post('/collection/sort', 'CollectionController@processSort');
